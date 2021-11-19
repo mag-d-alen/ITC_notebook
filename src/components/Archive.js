@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { Button, Box } from '@mui/material';
-import * as localForage from 'localforage';
 import Note from './Note';
 import styled from '@emotion/styled';
 

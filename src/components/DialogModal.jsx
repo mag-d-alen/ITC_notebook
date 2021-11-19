@@ -37,17 +37,13 @@ export default class FormDialog extends Component {
 
   handleContentChange = (e) => {
     const noteState = this.state.note;
-    for (const content in noteState) {
-      noteState.content = e.target.value;
-      this.setState({ note: noteState });
-    }
+    noteState.content = e.target.value;
+    this.setState({ note: noteState });
   };
   handleTitleChange = (e) => {
     const noteState = this.state.note;
-    for (const title in noteState) {
-      noteState.title = e.target.value;
-      this.setState({ note: noteState });
-    }
+    noteState.title = e.target.value;
+    this.setState({ note: noteState });
   };
   render() {
     const { title, content } = this.state.note;
