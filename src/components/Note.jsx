@@ -5,6 +5,7 @@ import { Paper, Button, Box } from '@mui/material';
 import styled from '@emotion/styled';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FormDialog from './DialogModal';
+import Reminder from './Reminder';
 
 export default function Note(props) {
   const {
@@ -41,6 +42,7 @@ export default function Note(props) {
             updateNote={updateNote}
             updateDate={updateDate}
           />
+          <Reminder />
         </Box>
       ) : (
         <Box>
