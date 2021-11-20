@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Input, Button, Box } from '@mui/material';
+import { Input, Button, Box, Alert } from '@mui/material';
 import styled from '@emotion/styled';
 
 import moment from 'moment';
@@ -15,6 +15,7 @@ export default class Reminder extends Component {
       reminderDate: '',
       reminderTime: '',
       reminderSet: false,
+      isOpen: false,
     };
   }
 
@@ -27,12 +28,9 @@ export default class Reminder extends Component {
     const timeLapse = Math.floor(futureDate - nowInMS);
 
     timer = setTimeout(() => {
-      alert('Reminder -check out your notes!');
+      this.setOpen();
       this.setState({ reminderSet: false });
     }, timeLapse);
-    alert(
-      `reminder set on ${this.state.reminderDate} at ${this.state.reminderTime}`
-    );
   }
 
   setReminderDate = (e) => {
@@ -52,19 +50,37 @@ export default class Reminder extends Component {
       this.handleSetReminder();
     }
   }
+  setOpen() {
+    this.setState({ isOpen: true });
+  }
+  setClose() {
+    this.setState({ isOpen: false });
+  }
 
   render() {
+    const { isOpen, reminderDate, reminderTime, reminderSet } = this.state;
     return (
       <StyledBox>
+        {!isOpen && reminderSet && (
+          <Alert severity='success'>
+            reminder set on {reminderDate} at {reminderTime}
+          </Alert>
+        )}
+        {isOpen && (
+          <Alert severity='error' onClick={() => this.setClose()}>
+            <strong> Reminder! </strong> It is {reminderDate}
+            {reminderTime} now, don't forget your tasks!
+          </Alert>
+        )}
         Set reminder
         <Input
           type='date'
           onChange={(e) => this.setReminderDate(e)}
-          value={this.state.reminderDate}
+          value={reminderDate}
         />
         <Input
           type='time'
-          value={this.state.reminderTime}
+          value={reminderTime}
           onChange={(e) => this.setReminderTime(e)}
         />
         <Button onClick={() => this.checkReminderSet()}>Set Reminder</Button>
