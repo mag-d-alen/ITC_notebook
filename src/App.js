@@ -21,25 +21,6 @@ export class App extends Component {
     };
   }
 
-  componentDidMount() {
-    localForage
-      .getItem('notes')
-      .then((savedNotes) => {
-        savedNotes && this.setState({ notes: savedNotes });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-    localForage
-      .getItem('archive')
-      .then((archivedNotes) => {
-        this.setState({ archivedNotes });
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  }
-
   componentDidUpdate() {
     this.updateLocalForage('archive', this.state.archivedNotes);
     this.updateLocalForage('notes', this.state.notes);
@@ -66,7 +47,6 @@ export class App extends Component {
       const archivedNotes = [...this.state.archivedNotes, note];
       const notes = newNotes.filter((item) => item.id !== note.id);
       this.setState({ notes, archivedNotes });
-      console.log(archivedNotes);
       this.updateLocalForage('archive', archivedNotes);
     }
   };
@@ -86,7 +66,6 @@ export class App extends Component {
     localForage
       .getItem(collection)
       .then(() => {
-        console.log(collection);
         localForage.setItem(collection, noteArray);
       })
       .catch(function (err) {
@@ -121,7 +100,7 @@ export class App extends Component {
           })}
           <Archive
             restoreNote={this.restoreNote}
-            savedNotes={this.state.archivedNotes}
+            archivedNotes={this.state.archivedNotes}
           />
         </StyledDiv>
       </>

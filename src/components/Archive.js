@@ -19,17 +19,16 @@ export default class Archive extends Component {
 
   render() {
     const { showArchived } = this.state;
-    const { savedNotes } = this.props;
+    const { archivedNotes } = this.props;
 
     return (
       <StyledDiv>
         <Button onClick={() => this.toggleShowArchived()}>
           {!showArchived ? 'Retreive Archived Notes' : 'Hide Archived Notes'}
         </Button>
-
-        {savedNotes.length > 0 &&
-          showArchived &&
-          savedNotes.map((note) => (
+        {showArchived &&
+          archivedNotes &&
+          archivedNotes.map((note) => (
             <Note
               key={note.id}
               note={note}
