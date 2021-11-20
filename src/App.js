@@ -20,7 +20,24 @@ export class App extends Component {
       archivedNotes: [],
     };
   }
-
+  componentDidMount() {
+    localForage
+      .getItem('notes')
+      .then((savedNotes) => {
+        savedNotes && this.setState({ notes: savedNotes });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+    localForage
+      .getItem('archive')
+      .then((archivedNotes) => {
+        archivedNotes && this.setState({ archivedNotes });
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
   componentDidUpdate() {
     this.updateLocalForage('archive', this.state.archivedNotes);
     this.updateLocalForage('notes', this.state.notes);
